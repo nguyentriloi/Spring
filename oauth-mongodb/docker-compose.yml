@@ -1,0 +1,21 @@
+mongo-oauth:
+  image: mongo:4.0
+  container_name: mongo
+  restart: always
+  environment:
+    MONGO_INITDB_ROOT_USERNAME: root
+    MONGO_INITDB_ROOT_PASSWORD: 123123
+    MONGO_INITDB_DATABASE: oauth-db
+  log_opt:
+    max-size: "10m"
+    max-file: "10"
+  ports:
+    - 27017:27017
+  networks:
+    default:
+      external:
+        name: tpl-network
+  volumes:
+    # seeding scripts
+    - ./mongo-init/001_users.js:/docker-entrypoint-initdb.d/001_users.js:ro
+    

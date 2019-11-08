@@ -1,0 +1,31 @@
+version: '3.3'
+
+services:
+
+  mysql:
+      build:
+          context: ./mysql
+          args:
+            - MYSQL_ROOT_PASSWORD=admin
+      volumes:
+        - ./data/mysql/:/var/lib/mysql
+      expose:
+        - "3306"
+
+  mongo:
+      build: ./oauth-mongodb
+      expose:
+        - "27017"
+      volumes:
+        - ./data/mongo/:/var/lib/mongodb
+
+  rabbitmq:
+      build:
+        context: ./rabbitmq
+        args:
+          - MANAGEMENT=false
+          - FEDERATION=false
+          - RABBITMQ_DEFAULT_USER=guest
+          - RABBITMQ_DEFAULT_PASS=guest
+      expose:
+        - "5672"

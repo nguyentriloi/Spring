@@ -1,0 +1,3 @@
+sudo docker run -p 9090:9090 -v /home/pct438/Desktop/TestPlatform/databases/monitoring/init/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus
+
+sudo docker run -d --name=granfana -p 3000:3000 grafana/grafana

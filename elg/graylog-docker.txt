@@ -1,0 +1,18 @@
+
+
+docker run -p 27017:27017 --name mongo -v /home/pct438/Desktop/GitLab/db-scripts/oauth-mongodb/mongo-init:/docker-entrypoint-initdb.d/001_users.js:ro -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=123123 -e MONGO_INITDB_DATABASE=oauth-db -d mongo:3  
+
+sudo sysctl -w vm.max_map_count=262144
+
+sudo docker run --name elasticsearch -p 9200:9200 -p 9300:9300 -e "http.host=0.0.0.0" -e "ES_JAVA_OPTS=-Xms512m -Xmx512m" -d docker.elastic.co/elasticsearch/elasticsearch-oss:6.6.1
+
+sudo docker run --name graylog --link mongo --link elasticsearch -p 9000:9000 -p 1514:1514 -p 1514:1514/udp -p 12201:12201 -p 12201:12201/udp -e GRAYLOG_HTTP_EXTERNAL_URI="http://127.0.0.1:9000/" -e GRAYLOG_MONGODB_URI="mongodb://root:123123@mongo:27017/admin" -d graylog/graylog:3.1
+
+
+docker run -p 27017:27017 --name mongo -d mongo:3  
+
+
+docker run --name graylog --link mongo --link elasticsearch -p 9000:9000 -p 1514:1514 -p 1514:1514/udp -p 12201:12201 -p 12201:12201/udp -e GRAYLOG_HTTP_EXTERNAL_URI="http://10.225.3.169:9000/" -d graylog/graylog:3.1
+
+
+git clone http://git.devops.ifisolution.com/n3/test-platform/db-scripts.git --config "http.proxy=10.225.3.1:3128" "https.proxy=10.225.3.1:3128"
